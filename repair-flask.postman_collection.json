@@ -1,0 +1,432 @@
+{
+	"info": {
+		"_postman_id": "619f790e-2687-4b41-9212-18ab94479b72",
+		"name": "repair-flask",
+		"description": "教务处Python",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "故障相关",
+			"item": [
+				{
+					"name": "查询问题分类",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{host}}/fault/typeshow",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"fault",
+								"typeshow"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "问题分类添加",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"typeName\":\"投影\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/fault/typeadd",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"fault",
+								"typeadd"
+							]
+						},
+						"description": "问题分类上传"
+					},
+					"response": []
+				},
+				{
+					"name": "获取某分类下可能出现的问题",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/fault/faultshow?id=0cc175b9c0f1b6a831c399e269772661",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"fault",
+								"faultshow"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "0cc175b9c0f1b6a831c399e269772661"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "故障名称添加",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t \"id\": \"RI189VJ4\",\n\t\"faultTypeName\":\"蓝屏\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/fault/faultadd",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"fault",
+								"faultadd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "返回问题的具体解决方案",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/fault/solution?id=0cc175b9c0f1b6a831c399e269772661",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"fault",
+								"solution"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "0cc175b9c0f1b6a831c399e269772661"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "order",
+			"item": [
+				{
+					"name": "下单",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"phone\":\"13924387832\",\n\t\"equipment\":\"设备类型\",\n\t\"content\":\"content\",\n\t\"roomid\":\"A1-201\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/order/add",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"order",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "获取未接订单列表",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/order/list",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"order",
+								"list"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "订单操作"
+		},
+		{
+			"name": "管理员相关",
+			"item": [
+				{
+					"name": "管理员登陆",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"account\":\"999@qq.com\",\n\t\"secret\":\"123456\",\n\t\"type\":100\n}"
+						},
+						"url": {
+							"raw": "{{host}}/token",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "管理员接单",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "eyJhbGciOiJIUzUxMiIsImlhdCI6MTU2NzEwMDQ5MSwiZXhwIjoxNTY5NjkyNDkxfQ.eyJ1aWQiOjIsInR5cGUiOjEwMCwic2NvcGUiOiJBZG1pblNjb3BlIn0.Z2UmhcR4CLMsiemL2UOZS9GAmQHepCpntmzRdFMV4ZA6gHMYnrZTVXj4297tCsfWuo7a4htV4IwJNqOXviZtwQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\":\"9fe1951b42557d0a1e6a2896e065d56e\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/order/accept",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"order",
+								"accept"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "完成订单",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "eyJhbGciOiJIUzUxMiIsImlhdCI6MTU2NzEwMDQ5MSwiZXhwIjoxNTY5NjkyNDkxfQ.eyJ1aWQiOjIsInR5cGUiOjEwMCwic2NvcGUiOiJBZG1pblNjb3BlIn0.Z2UmhcR4CLMsiemL2UOZS9GAmQHepCpntmzRdFMV4ZA6gHMYnrZTVXj4297tCsfWuo7a4htV4IwJNqOXviZtwQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\":\"9fe1951b42557d0a1e6a2896e065d56e\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/order/finsh",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"order",
+								"finsh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "我的未完成订单列表",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "eyJhbGciOiJIUzUxMiIsImlhdCI6MTU2NzEwMDQ5MSwiZXhwIjoxNTY5NjkyNDkxfQ.eyJ1aWQiOjIsInR5cGUiOjEwMCwic2NvcGUiOiJBZG1pblNjb3BlIn0.Z2UmhcR4CLMsiemL2UOZS9GAmQHepCpntmzRdFMV4ZA6gHMYnrZTVXj4297tCsfWuo7a4htV4IwJNqOXviZtwQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/order/mylist",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"order",
+								"mylist"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "我的已完成订单",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "eyJhbGciOiJIUzUxMiIsImlhdCI6MTU2NzEwMDQ5MSwiZXhwIjoxNTY5NjkyNDkxfQ.eyJ1aWQiOjIsInR5cGUiOjEwMCwic2NvcGUiOiJBZG1pblNjb3BlIn0.Z2UmhcR4CLMsiemL2UOZS9GAmQHepCpntmzRdFMV4ZA6gHMYnrZTVXj4297tCsfWuo7a4htV4IwJNqOXviZtwQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/order/myfinsh",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"order",
+								"myfinsh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "他人订单",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "eyJhbGciOiJIUzUxMiIsImlhdCI6MTU2NzEwMDQ5MSwiZXhwIjoxNTY5NjkyNDkxfQ.eyJ1aWQiOjIsInR5cGUiOjEwMCwic2NvcGUiOiJBZG1pblNjb3BlIn0.Z2UmhcR4CLMsiemL2UOZS9GAmQHepCpntmzRdFMV4ZA6gHMYnrZTVXj4297tCsfWuo7a4htV4IwJNqOXviZtwQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/order/other",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"order",
+								"other"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "mini",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"code\":\"021S12vG0ma1uc2KXqtG0Nd2vG0S12vu\",\n\t\"type\":200\n}"
+				},
+				"url": {
+					"raw": "{{host}}/client/mini",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"client",
+						"mini"
+					]
+				},
+				"description": "小程序授权"
+			},
+			"response": []
+		}
+	]
+}

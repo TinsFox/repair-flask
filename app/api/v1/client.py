@@ -4,6 +4,7 @@
 import requests
 from flask import request, jsonify, json, current_app
 from app.libs.error_code import ClientTypeError, Success, AuthFailed, DuplicateMini
+from app.libs.helper import getOpenID
 from app.libs.redprint import Redprint
 from app.models.user import User
 from app.validators.forms import ClientForm, UserEmailForm, CodeForm, MiniForm
@@ -37,31 +38,30 @@ def getcode():
     return form.code.data
 
 
+"""
+    小程序登录
+
+
+    Args:
+        code
+        userinfo
+
+    Returns:
+        data:{
+            error_code: 0
+            msg: "ok"
+            request: "POST /v1/client/mini"
+            }
+    """
+
+
 @api.route('/mini', methods=['POST'])
 def mini_creat():
     form = CodeForm().validate_for_api()
-    res = gotOpenID(form.code.data)
+    res = getOpenID(form.code.data)
     openid = res['openid']
     userinfo = User.query.filter_by(openid=openid).first()
     if userinfo:
         return DuplicateMini()
     User.register_by_mini(openid, form.nickName.data, form.avatarUrl.data, form.gender.data)
     return Success()
-
-
-def gotOpenID(code):
-    appid = current_app.config['APP_ID']
-    SECRET = current_app.config['APP_SECRET']
-    errcode = {
-        '-1': u'系统繁忙，此时请开发者稍候再试',
-        '40029': u'code无效',
-        '45011': u'频率限制，每个用户每分钟100次',
-    }
-    # 网络请求地址 Get方式 注意format里面的内容，传入了三个参数：AppID(小程序ID)、AppSecret(小程序密钥)、code
-    url = "https://api.weixin.qq.com/sns/jscode2session?appid={0}&secret={1}&js_code={2}&grant_type=authorization_code".format(
-        appid, SECRET, code)
-    r = requests.get(url)
-    res = json.loads(r.text)
-    if 'errcode' in res.keys() and res.get('errcode') != 0:
-        raise AuthFailed(errcode[res.get('errcode')])
-    return res

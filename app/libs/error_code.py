@@ -1,7 +1,10 @@
 """
     Created by TinsFox on 2019-08-19.
 """
+from http.client import HTTPException
+
 from app.libs.error import APIException
+from flask import json
 
 __author__ = 'TinsFox'
 
@@ -85,3 +88,28 @@ class FileError(APIException):
     code = 400
     errcode = 4007
     msg = '文件格式不符合'
+
+
+class ApiSuccess(APIException):
+    @property
+    def generate_body(self):
+        t = {
+            'code': self.errcode,
+            'msg': self.message,
+            'data':
+                {
+                    'list': []
+                }
+        }
+
+        if self.data:
+            t = dict(t, **{'data': {'list': self.data if isinstance(self.data, list) else [self.data]}})
+        if self.others is not None and isinstance(self.others, dict):
+            t['data'].update(self.others)
+        return t
+
+
+class Return(APIException):
+    code = 200
+    error_code = 0
+    msg = "获取成功"

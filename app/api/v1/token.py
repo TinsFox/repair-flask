@@ -4,7 +4,8 @@
 from flask import current_app, jsonify
 
 from app.libs.enums import ClientTypeEnum
-from app.libs.error_code import AuthFailed
+from app.libs.error_code import AuthFailed, Success
+from app.libs.exceptions import ViewSuccess, AuthSuccess
 from app.libs.redprint import Redprint
 from app.models.user import User
 from app.validators.forms import ClientForm, TokenForm
@@ -33,9 +34,11 @@ def get_token():
                                 identity['scope'],
                                 expiration)
     t = {
-        'token': token.decode('ascii')
+        'token': token.decode('ascii'),
+        'expiration': expiration
     }
-    return jsonify(t), 201
+    # return jsonify(t), 201
+    return AuthSuccess(msg=u'登录成功', data=t)
 
 
 @api.route('/secret', methods=['POST'])
@@ -67,5 +70,5 @@ def generate_auth_token(uid, ac_type, scope=None,
     return s.dumps({
         'uid': uid,
         'type': ac_type.value,
-        'scope':scope
+        'scope': scope
     })

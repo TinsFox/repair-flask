@@ -6,19 +6,26 @@ from werkzeug.exceptions import HTTPException
 
 __author__ = 'TinsFox'
 
+
 class APIException(HTTPException):
     code = 500
     msg = 'sorry, we made a mistake (*￣︶￣)!'
     error_code = 999
+    message = "服务器繁忙"
+    errcode = None
+    data = []
 
     def __init__(self, msg=None, code=None, error_code=None,
-                 headers=None):
+                 headers=None, data=None, others=None):
         if code:
             self.code = code
         if error_code:
             self.error_code = error_code
         if msg:
             self.msg = msg
+        if data is not None:
+            self.data = data
+        self.others = others
         super(APIException, self).__init__(msg, None)
 
     def get_body(self, environ=None):
@@ -39,4 +46,3 @@ class APIException(HTTPException):
         full_path = str(request.full_path)
         main_path = full_path.split('?')
         return main_path[0]
-

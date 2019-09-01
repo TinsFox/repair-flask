@@ -79,3 +79,19 @@ class IDForm(Form):
 class SolutionForm(Form):
     id = StringField(validators=[DataRequired(message="请输入ID")])
     solutionBody = StringField(validators=[DataRequired(message="方案内容")])
+
+
+class OrderForm(Form):
+    roomid = StringField(validators=[DataRequired(message="课室号")])
+    content = StringField(validators=[DataRequired(message="故障描述")])
+    equipment = StringField(validators=[DataRequired(message="设备类型")])
+    code = StringField(validators=[DataRequired(message="code")])
+    phone = StringField()
+
+
+class AcceptForm(Form):
+    id = StringField(validators=[DataRequired(message="订单号")])
+
+
+class RoomForm(Form):
+    classid = IntegerField(validators=[DataRequired("课室id")])

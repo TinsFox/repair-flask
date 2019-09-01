@@ -9,13 +9,14 @@ __author__ = 'TinsFox'
 
 class Room(Base):
     id = Column(VARCHAR(100), primary_key=True)
-    bNum = Column(VARCHAR(10), unique=True)
-    lBum = Column(VARCHAR(10), unique=True)
-    rNum = Column(VARCHAR(10), unique=True)
-    classRoomId = Column(VARCHAR(10), unique=True)
+    bNum = Column(VARCHAR(10))
+    lBum = Column(VARCHAR(10))
+    rNum = Column(VARCHAR(10))
+    classRoomId = Column(VARCHAR(10))
+    content = Column(VARCHAR(20), unique=True)
 
     def keys(self):
-        return ['id', 'bNum', 'lBum', 'classRoomId']
+        return ['id', 'bNum', 'lBum', 'classRoomId', 'content']
 
     @staticmethod
     def insert(id, data):

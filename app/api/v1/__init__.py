@@ -2,7 +2,7 @@
     Created by TinsFox on 2019-08-19.
 """
 from flask import Blueprint
-from app.api.v1 import user, book, client, token, gift, fault, room
+from app.api.v1 import user, book, client, token, gift, fault, room, order
 
 __author__ = 'TinsFox'
 
@@ -16,4 +16,5 @@ def create_blueprint_v1():
     gift.api.register(bp_v1)
     fault.api.register(bp_v1)
     room.api.register(bp_v1)
+    order.api.register(bp_v1)
     return bp_v1

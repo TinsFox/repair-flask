@@ -2,17 +2,23 @@
     Created by TinsFox on 2019-08-21.
 """
 from app.libs.error_code import Success
+from app.libs.exceptions import ViewSuccess
 from app.libs.redprint import Redprint
 from app.models.classroom import Room
 from app.libs.helper import randomID
+from app.validators.forms import RoomForm
+
 __author__ = 'TinsFox'
 
 api = Redprint('room')
 
 
-@api.route('/room')
+@api.route('/')
 def room():
-    return "room"
+    form = RoomForm().validate_for_api()
+    classid = form.classid.data
+    room = Room().query.filter_by(classRoomId=classid).first()
+    return ViewSuccess(msg='获取成功', data=room)
 
 
 @api.route('/initroom')
@@ -25,5 +31,3 @@ def initroom():
         print(i)
     print(initdata)
     return Success()
-
-

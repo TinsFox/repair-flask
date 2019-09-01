@@ -1,30 +1,34 @@
 """
  Created by 七月 on 2018/5/26.
 """
-from sqlalchemy import Column, String, Integer, orm
+from sqlalchemy import Column, String, Integer, orm, VARCHAR, TEXT
 
-from app.models.base import Base
+from app.models.base import Base, db
 
 __author__ = '七月'
 
 
-class Book(Base):
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    title = Column(String(50), nullable=False)
-    author = Column(String(30), default='未名')
-    binding = Column(String(20))
-    publisher = Column(String(50))
-    price = Column(String(20))
-    pages = Column(Integer)
-    pubdate = Column(String(20))
-    isbn = Column(String(15), nullable=False, unique=True)
-    summary = Column(String(1000))
-    image = Column(String(50))
+class Order(Base):
+    id = Column(VARCHAR(200), primary_key=True)
+    roomid = Column(VARCHAR(100))
+    phone = Column(VARCHAR(100))
+    content = Column(TEXT)
+    equipment = Column(VARCHAR(100))
+    openid = Column(VARCHAR(100))
+    uuid = Column(VARCHAR(100))
 
-    @orm.reconstructor
-    def __init__(self):
-        self.fields = ['id', 'title', 'author', 'binding',
-                       'publisher',
-                       'price', 'pages', 'pubdate', 'isbn',
-                       'summary',
-                       'image']
+    def keys(self):
+        return ['id', 'roomid', 'phone', 'content', 'equipment', 'uuid', 'status', 'create_time']
+
+    @staticmethod
+    def insert(data):
+        """ 向数据库写入"""
+        with db.auto_commit():
+            order = Order()
+            order.id = data['id']
+            order.roomid = data['roomid']
+            order.phone = data['phone']
+            order.content = data['content']
+            order.equipment = data['equipment']
+            order.openid = data['openid']
+        db.session.add(order)

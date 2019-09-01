@@ -18,6 +18,8 @@ flask-cors = "*"
 requests = "*"
 flask-wtf = "*"
 xlrd = "*"
+flask-docs = "*"
+flasgger = "*"
 
 [requires]
 python_version = "3.7"

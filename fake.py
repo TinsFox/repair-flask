@@ -1,6 +1,8 @@
 """
  Created by 七月 on 2018/5/1.
 """
+from flask import Flask
+
 __author__ = '七月'
 
 
@@ -8,7 +10,7 @@ from app import create_app
 from app.models.base import db
 from app.models.user import User
 
-app = create_app()
+app = create_app(Flask(__name__))
 with app.app_context():
     with db.auto_commit():
         # 创建一个超级管理员
